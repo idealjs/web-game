@@ -9,8 +9,6 @@ import {
     Users,
 } from "react-feather";
 
-import useTimer from "../lib/useTimer";
-
 const useStyles = makeStyles({
     Button: {
         textAlign: "center",
@@ -25,9 +23,6 @@ const useStyles = makeStyles({
 
 const Sidebar = () => {
     const classes = useStyles();
-    useTimer(() => {
-        console.log("test");
-    });
 
     return (
         <div

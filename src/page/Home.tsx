@@ -1,8 +1,11 @@
 import Body from "../component/Body";
 import Header from "../component/Header";
 import Sidebar from "../component/Sidebar";
+import useGameplay from "../lib/useGameplay";
 
 const Home = () => {
+    useGameplay();
+
     return (
         <div style={{ display: "flex", height: "100%", width: "100%" }}>
             <Sidebar />
