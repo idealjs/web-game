@@ -1,4 +1,5 @@
 import {
+    CMPTFactory,
     DIRECTION,
     INode,
     Layout,
@@ -71,10 +72,23 @@ const nodes: INode[] = [
     },
 ];
 
+const factory: CMPTFactory = (page: string) => {
+    switch (page) {
+        case "test":
+            return () => {
+                return <div>test</div>;
+            };
+        default:
+            return () => {
+                return <div>page {page} not found</div>;
+            };
+    }
+};
+
 const Body = () => {
     return (
         <div style={{ flex: 1, overflow: "hidden" }}>
-            <Provider value={nodes}>
+            <Provider value={nodes} factory={factory}>
                 <Layout nodeId="root" />
             </Provider>
         </div>
