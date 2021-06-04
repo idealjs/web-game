@@ -1,4 +1,14 @@
+import {
+    ADD_PANEL_DATA,
+    MASK_PART,
+    PanelNode,
+    ROOTID,
+    SLOT_EVENT,
+    useSns,
+} from "@idealjs/layout-manager";
 import { makeStyles } from "@material-ui/styles";
+import { nanoid } from "nanoid";
+import { useCallback } from "react";
 import {
     Activity,
     Inbox,
@@ -20,15 +30,21 @@ const useStyles = makeStyles({
         paddingLeft: "6px",
         paddingRight: "6px",
         paddingBottom: "2px",
+        zIndex: 1,
     },
     Button: {
+        height: "46px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
         position: "relative",
         textAlign: "center",
         cursor: "pointer",
         color: "#c5c3c6",
-        marginTop: "18px",
         "&:hover": {
             color: "#dcdcdd",
+            backgroundColor: "#575b5f",
         },
         "&:hover $Tooltip": {
             visibility: "visible",
@@ -38,6 +54,21 @@ const useStyles = makeStyles({
 
 const Sidebar = () => {
     const classes = useStyles();
+    const sns = useSns();
+    const onClick = useCallback(() => {
+        const panelNode = new PanelNode({
+            panelJSON: {
+                id: nanoid(),
+                page: "test",
+            },
+        });
+        const data: ADD_PANEL_DATA = {
+            panelNode,
+            mask: MASK_PART.RIGHT,
+            target: ROOTID,
+        };
+        sns.send("mainLayout", SLOT_EVENT.ADD_PANEL, data);
+    }, [sns]);
 
     return (
         <div
@@ -49,7 +80,7 @@ const Sidebar = () => {
             }}
         >
             <div style={{ flex: 1, marginTop: "12px" }}>
-                <div className={classes.Button}>
+                <div className={classes.Button} onClick={onClick}>
                     <Users />
                     <span className={classes.Tooltip}>Members</span>
                 </div>
